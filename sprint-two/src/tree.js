@@ -2,15 +2,11 @@ var Tree = function(value){
   var newTree = {};
   newTree.value = value;
 
-
-  newTree.children = [];
   _.extend(newTree, treeMethods);
+  newTree.children = [];
+
   return newTree;
 };
-
-
-
-
 
 var treeMethods = {};
 
@@ -24,6 +20,7 @@ treeMethods.contains = function(target){
   var traverse = function(node) {
     if (node.value === target) {
       condition = true;
+      return;
     }
     for (var i = 0; i < node.children.length; i++) {
       traverse(node.children[i]);
