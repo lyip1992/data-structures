@@ -1,70 +1,53 @@
 var BinarySearchTree = function(value){
+  this.value = value;
   this.left = null;
   this.right = null;
-  this.value = value;
 };
 
 BinarySearchTree.prototype.insert = function(value) {
-  if (value > this.value && this.right === null) {
-    this.right = new BinarySearchTree(value);
+  if( value < this.value ) {
+    if( this.left === null ) {
+      this.left = new BinarySearchTree(value);
+    } else {
+      this.left.insert(value);
+    }
+  } else if( value > this.value ) {
+    if( this.right === null ) {
+      this.right = new BinarySearchTree(value);
+    } else {
+      this.right.insert(value);
+    }
+  } else {
+    return 'The tree already contains this value';
   }
-
-  if (value > this.value && this.right) {
-    this.right.insert(value);
-  }
-
-  if (value < this.value && this.left === null) {
-    this.left = new BinarySearchTree(value);
-  }
-
-  if (value < this.value && this.left) {
-    this.left.insert(value);
-  }
-
 };
 
 BinarySearchTree.prototype.contains = function(target) {
-  var condition = false;
-
-  var check = function(item) {
-
-    if (item.value === target) {
-      condition = true;
+  if( target === this.value ) {
+    return true;
+  } else if( target < this.value ) {
+    if( !this.left ) {
+      return false;
+    } else {
+      return this.left.contains(target);
     }
-
-    if (target < item.value && item.left) {
-      check(item.left);
+  } else if( target > this.value ) {
+    if( !this.right ) {
+      return false;
+    } else {
+      return this.right.contains(target);
     }
-    if (target > item.value && item.right) {
-      check(item.right);
-    }
-
-  };
-
-  check(this);
-
-  return condition;
+  }
 };
 
 BinarySearchTree.prototype.depthFirstLog = function(callback) {
-
-  var loop = function(item) {
-    if (item.value) {
-      callback(item.value);
-    }
-
-    if (item.left) {
-      loop(item.left);
-
-    }
-
-    if (item.right) {
-      loop(item.right);
-    }
+  callback(this.value);
+  if( this.left ) {
+    this.left.depthFirstLog(callback);
   }
-
-  loop(this);
-
+  if( this.right ) {
+    this.right.depthFirstLog(callback);
+  }
 };
 
 /*
