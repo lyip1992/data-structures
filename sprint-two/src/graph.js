@@ -46,7 +46,6 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
   if( spliceIndex !== -1 ) {
     this._nodes[toNode].edges.splice(spliceIndex, 1);
   }
-
 };
 
 Graph.prototype.forEachNode = function(cb){
